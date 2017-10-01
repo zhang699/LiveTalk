@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LiveTalk</string>
+    <string name="title_activity_publisher">PublisherActivity</string>
+    <string name="title_activity_subscriber">SubscriberActivity</string>
+</resources>

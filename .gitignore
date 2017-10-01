@@ -1,0 +1,13 @@
+*.iml
+.gradle
+*/bin
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+*/build
+/vitamio
+/ors.yasea
