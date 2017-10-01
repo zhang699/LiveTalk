@@ -42,7 +42,7 @@ Publisher: Xiaomi Note 2 Android 6.0.0
 Others
 ---
 ```java
-mVideoView.setBufferSize(1024); // makes reduce buffer can shorten the RTMP latency
+mVideoView.setBufferSize(1024); // reduce the buffer size can shorten the RTMP latency
 ```
 
 Know Issues
@@ -52,4 +52,6 @@ https://github.com/yixia/VitamioBundle/issues/321
 
 TODO
 ---
-- [ ] Replace Vitamio, because of latency issue  
+- [ ] Replace Vitamio, because of continus playing make cause accumulated buffer and lead to latency issue  
+- [ ] Add Chat came from subscriber
+- [ ] Check Streaming Audio is fine
