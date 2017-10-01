@@ -1,16 +1,17 @@
 
 
 ### Installation
-- Clone the code
+- ```git clone``` the code
+
 - Import Module from Android Studio with [vitamio](https://github.com/yixia/VitamioBundle/vitamio) and name as ```vitamio```
 
 - Import Module from [ossrs](https://github.com/begeekmyfriend/yasea) and name as ```ors.yasea```
 
 ### Screenshots
-
-![Publisher](https://dl2.pushbulletusercontent.com/WolTqTEF6nak2SmTrAI35xOcifZotdnm/Screenshot_2017-10-01-15-43-10-419_fudreamer.com.livetalk.png)
-
-![Subscriber](https://i.imgur.com/qUldsDx.jpg))
+<div>
+<img width=256 src="https://dl2.pushbulletusercontent.com/WolTqTEF6nak2SmTrAI35xOcifZotdnm/Screenshot_2017-10-01-15-43-10-419_fudreamer.com.livetalk.png" />
+<img width=256 src="https://i.imgur.com/qUldsDx.jpg" />
+</div>
 ### How to use
 
 - Choose your role (Publisher or Subscriber)
