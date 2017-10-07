@@ -16,16 +16,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import io.vov.vitamio.MediaPlayer;
-import io.vov.vitamio.widget.MediaController;
-import io.vov.vitamio.widget.VideoView;
+import com.dou361.ijkplayer.widget.IjkVideoView;
+
+import tv.danmaku.ijk.media.player.IMediaPlayer;
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
+
 
 public class SubscriberActivity  extends AppCompatActivity implements TextWatcher {
 
     private static final String TAG = SubscriberActivity.class.getName();
 
     private String pathToFileOrUrl= "rtmp://192.168.31.135/live/stream";
-    private VideoView mVideoView;
+    private IjkVideoView mVideoView;
     private boolean mIsPlaying;
     private Button mStopButton;
     private Button mPlayButton;
@@ -51,7 +53,17 @@ public class SubscriberActivity  extends AppCompatActivity implements TextWatche
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
 
-        mVideoView = (VideoView) findViewById(R.id.surface_view);
+        try {
+            IjkMediaPlayer.loadLibrariesOnce(null);
+            IjkMediaPlayer.native_profileBegin("libijkplayer.so");
+
+        } catch (Throwable e) {
+            Log.e(TAG, "loadLibraries error", e);
+        }
+
+
+        mVideoView =  (IjkVideoView) findViewById(R.id.video_view);
+
         mVideoView.setClickable(false);
         mPlayButton = (Button) findViewById(R.id.play);
         mStopButton = (Button) findViewById(R.id.stop);
@@ -65,29 +77,41 @@ public class SubscriberActivity  extends AppCompatActivity implements TextWatche
             return;
         } else {
 
-            /*
-             * Alternatively,for streaming media you can use
-             * mVideoView.setVideoURI(Uri.parse(URLstring));
-             */
+
+            Log.d(TAG, "pathToFileOrUrl"+ pathToFileOrUrl);
+            //mVideoView.setVideoPath("http://www.streambox.fr/playlists/test_001/stream.m3u8");
             mVideoView.setVideoPath(pathToFileOrUrl);
-            mVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_STRETCH, 0.8f);
-            //mVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_STRETCH, 0);
-            mVideoView.setMediaController(new MediaController(this));
-            mVideoView.requestFocus();
+            mVideoView.seekTo(0);
+
+            //mVideoView.setMediaController(mMediaController);
+
             //mVideoView.setBufferSize(20);
-            mVideoView.setBufferSize(1024);
-            mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            mVideoView.setOnInfoListener(new IMediaPlayer.OnInfoListener() {
                 @Override
-                public void onPrepared(MediaPlayer mediaPlayer) {
-                    // optional need Vitamio 4.0
-                    Log.w(TAG, "prepared");
-                    mediaPlayer.setPlaybackSpeed(1.0f);
+                public boolean onInfo(IMediaPlayer iMediaPlayer, int i, int i1) {
+                    Log.d(TAG, "info "+ i +" "+i1);
+                    return false;
+                }
+            });
+            mVideoView.setOnErrorListener(new IMediaPlayer.OnErrorListener() {
+                @Override
+                public boolean onError(IMediaPlayer iMediaPlayer, int i, int i1) {
+                    Log.d(TAG, "error "+ i +" "+i1);
+                    return false;
+                }
+            });
+            mVideoView.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(IMediaPlayer iMediaPlayer) {
+
+                    //mVideoView.setOptionForIJKMediaPlayer(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "probsize", 4096);
+                    mVideoView.start();
                     mIsPlaying = true;
-
-
                     SubscriberActivity.this.refreshControlState();
                 }
             });
+
+
         }
 
     }
@@ -95,12 +119,26 @@ public class SubscriberActivity  extends AppCompatActivity implements TextWatche
     public void startPlay(View view) {
         if (!TextUtils.isEmpty(pathToFileOrUrl) && !mIsPlaying) {
             mVideoView.setVideoPath(pathToFileOrUrl);
+            mVideoView.seekTo(0);
+            mVideoView.start();
             mIsPlaying = true;
             this.refreshControlState();
 
         } else if (mIsPlaying) {
             this.stopPlay(null);
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (mVideoView != null) {
+            mVideoView.stopPlayback();
+            mVideoView.release(true);
+        }
+        IjkMediaPlayer.native_profileEnd();
+
     }
 
     void refreshControlState() {
@@ -120,7 +158,7 @@ public class SubscriberActivity  extends AppCompatActivity implements TextWatche
     public void onConfigurationChanged(Configuration newConfig) {
         //屏幕切换时，设置全屏
         if (mVideoView != null){
-            mVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_SCALE, 0);
+            //mVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_SCALE, 0);
         }
         super.onConfigurationChanged(newConfig);
     }

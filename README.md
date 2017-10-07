@@ -3,7 +3,7 @@
 ### Installation
 - ```git clone``` the code
 
-- Import Module from Android Studio with [vitamio](https://github.com/yixia/VitamioBundle/vitamio) and name as ```vitamio```
+- Import Module ```jjdxm_ijkplayer``` from Android Studio with [jjdxm_ijkplayer repo](https://github.com/jjdxmashl/jjdxm_ijkplayer) and name as ```jjdxm_ijkplayer```
 
 - Import Module from [ossrs](https://github.com/begeekmyfriend/yasea) and name as ```ors.yasea```
 
@@ -28,7 +28,7 @@
 
 ### Use Opensources 
 
-[vitamio](https://github.com/yixia/VitamioBundle)
+[jjdxm_ijkplayer](https://github.com/jjdxmashl/jjdxm_ijkplayer)
 
 [ossrs](https://github.com/begeekmyfriend/yasea)
 
@@ -42,7 +42,9 @@ Publisher: Xiaomi Note 2 Android 6.0.0
 Others
 ---
 ```java
-mVideoView.setBufferSize(1024); // reduce the buffer size can shorten the RTMP latency
+ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "probsize", 4096);
+ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "fflags", "nobuffer"); 
+// disable the buffer can shorten the RTMP latency
 ```
 
 Know Issues
@@ -55,3 +57,9 @@ TODO
 - [ ] Replace Vitamio, because of continus playing make cause accumulated buffer and lead to latency issue  
 - [ ] Add Chat came from subscriber
 - [ ] Check Streaming Audio is fine
+
+Useful information
+---
+[RTMP latency](https://github.com/Bilibili/ijkplayer/issues/2485)
+
+

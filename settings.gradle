@@ -1,1 +1,1 @@
-include ':app', ':vitamio', ':ors.yasea'
+include ':app', ':ors.yasea', ':jjdxm-ijkplayer'
