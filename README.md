@@ -17,9 +17,9 @@
 
 - Choose your role (Publisher or Subscriber)
 
-- Input your RTMP Server's location
+- Input your RTMP Server's location (use [nginx-rtmp](https://github.com/zhang699/nginx-rtmp))
 
-```rtmp://10.0.3.2/live/stream //if inside genymotion```
+```rtmp://localhost/live/stream // replace localhost to 10.0.3.2 if run Genymotion emulator```
 
 - Click ```Publish``` Button if you are publisher
 
