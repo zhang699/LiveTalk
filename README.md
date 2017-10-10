@@ -35,9 +35,13 @@
 
 Test
 -----
-Subscriber: GenyMotion Google Nexus 5X API Level 23 Android 6.0.1
+Subscriber
+- GenyMotion Google Nexus 5X API Level 23 Android 6.0.1
+- Redmi Note 3
 
-Publisher: Xiaomi Note 2 Android 6.0.0
+Publisher
+- Xiaomi Note 2 Android 6.0.0
+- Redmi Note 3
 
 Others
 ---
