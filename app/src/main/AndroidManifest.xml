@@ -20,7 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SubscriberActivity"  android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".SubscriberActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
             <!--
             <intent-filter>
@@ -32,10 +34,14 @@
         </activity>
         <activity
             android:name=".PublisherActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".RoomList"
+            android:label="@string/title_activity_room_list"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

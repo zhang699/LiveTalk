@@ -45,13 +45,9 @@ public class SubscriberActivity  extends AppCompatActivity implements TextWatche
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
-        setTitle("Subscriber");
-        /*this.getWindow().addFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-                        | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
+        String roomName = getIntent().getStringExtra("roomName");
+        String streamId = getIntent().getStringExtra("streamId");
+        setTitle(roomName);
 
         try {
             IjkMediaPlayer.loadLibrariesOnce(null);
@@ -67,7 +63,8 @@ public class SubscriberActivity  extends AppCompatActivity implements TextWatche
         mVideoView.setClickable(false);
         mPlayButton = (Button) findViewById(R.id.play);
         mStopButton = (Button) findViewById(R.id.stop);
-        pathToFileOrUrl =  mSharePref.getString(PublisherActivity.RTMP_URL, PublisherActivity.DEFAULT_RTMP_URL);
+        //pathToFileOrUrl =  mSharePref.getString(PublisherActivity.RTMP_URL, PublisherActivity.DEFAULT_RTMP_URL);
+        pathToFileOrUrl =  String.format(BuildConfig.RTMP_HOST, streamId);
         mInputSteamUrl = (EditText) findViewById(R.id.input_url);
         mInputSteamUrl.setText(pathToFileOrUrl);
         mInputSteamUrl.addTextChangedListener(this);
@@ -83,9 +80,6 @@ public class SubscriberActivity  extends AppCompatActivity implements TextWatche
             mVideoView.setVideoPath(pathToFileOrUrl);
             mVideoView.seekTo(0);
 
-            //mVideoView.setMediaController(mMediaController);
-
-            //mVideoView.setBufferSize(20);
             mVideoView.setOnInfoListener(new IMediaPlayer.OnInfoListener() {
                 @Override
                 public boolean onInfo(IMediaPlayer iMediaPlayer, int i, int i1) {
