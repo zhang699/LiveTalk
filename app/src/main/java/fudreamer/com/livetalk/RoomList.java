@@ -1,13 +1,16 @@
 package fudreamer.com.livetalk;
 
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.android.volley.Response;
@@ -26,6 +29,8 @@ import java.util.List;
 
 public class RoomList extends ListActivity {
 
+    public static final String INTENT_STREAM_ID = "streamId";
+    public static final String INTENT_ = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +42,20 @@ public class RoomList extends ListActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                AlertDialog.Builder builder = new AlertDialog.Builder(RoomList.this);
+                final View convertView  = LayoutInflater.from(RoomList.this).inflate(R.layout.dialog_input, null);
+                builder.setView(convertView);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        EditText title = convertView.findViewById(R.id.room_name);
+                        EditText description = convertView.findViewById(R.id.room_description);
+                        createRoom(title.getText().toString(), description.getText().toString());
+                    }
+                });
+                builder.create().show();
             }
         });
 
@@ -71,13 +88,51 @@ public class RoomList extends ListActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String body = null;
+                printVolleyError(error);
+            }
+        });
+    }
+
+    private void printVolleyError(VolleyError error) {
+        String body = null;
+        try {
+            body = new String(error.networkResponse.data,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        Log.d("onResponse", body);
+    }
+
+    void createRoom(final String name, String description){
+        JSONObject room = new JSONObject();
+        try {
+            room.put("name", name);
+            room.put("description", description);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        NetworkRequester.getInstance(this).executePOSTRequest("rooms", room.toString(), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("onResponse", ""+response.toString());
                 try {
-                    body = new String(error.networkResponse.data,"UTF-8");
-                } catch (UnsupportedEncodingException e) {
+                    JSONObject responseContent = response.getJSONObject("data");
+                    Intent intent = new Intent(RoomList.this, PublisherActivity.class);
+
+                    intent.putExtra("name", name);
+                    intent.putExtra(INTENT_STREAM_ID, responseContent.getString(INTENT_STREAM_ID));
+                    startActivity(intent);
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.d("onResponse", body);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                printVolleyError(error);
             }
         });
     }
@@ -89,7 +144,7 @@ public class RoomList extends ListActivity {
         Room room = (Room) item;
         Intent intent = new Intent(this, SubscriberActivity.class);
         intent.putExtra("roomName", room.getName());
-        intent.putExtra("streamId", room.getStreamId());
+        intent.putExtra(INTENT_STREAM_ID, room.getStreamId());
         startActivity(intent);
     }
 }

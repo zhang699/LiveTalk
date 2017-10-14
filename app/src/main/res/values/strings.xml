@@ -3,4 +3,6 @@
     <string name="title_activity_publisher">PublisherActivity</string>
     <string name="title_activity_subscriber">SubscriberActivity</string>
     <string name="title_activity_room_list">RoomList</string>
+    <string name="room_name">輸入房間名稱</string>
+    <string name="room_description">輸入房間描述</string>
 </resources>

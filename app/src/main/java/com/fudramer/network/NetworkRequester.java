@@ -43,13 +43,13 @@ public class NetworkRequester {
 
     }
     public void executePOSTRequest(String url, String json, Response.Listener<JSONObject> success, Response.ErrorListener failure) {
-        JsonObjectRequest jsonObjectRequest  = new JsonObjectRequest(Request.Method.POST,
+        JsonObjectRequest jsonObjectRequest  = new ApplicationJSONObjectRequest(Request.Method.POST,
                 String.format(mHost, url),
                 json,
                 success,
                 failure
         );
-        mQueue.add(jsonObjectRequest );
+        mQueue.add(jsonObjectRequest);
     }
 
     public void exeuteAPIGETRequest(String url, Map<String, String> params, Response.Listener<JSONObject> success, Response.ErrorListener failure) {

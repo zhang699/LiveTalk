@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -50,35 +51,34 @@ public class PublisherActivity extends AppCompatActivity implements RtmpHandler.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.setTitle("Publisher");
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+
         mSharedPref = getSharedPreferences(getApplication().getPackageName(), MODE_PRIVATE);
         mPublishButton = (Button) findViewById(R.id.publish);
         mEncodeButton = (Button) findViewById(R.id.soft_encoder);
 
         mRTMPUrlEditText = (EditText) findViewById(R.id.input_url);
-        mRTMPUrlEditText.setText(mSharedPref.getString(RTMP_URL, DEFAULT_RTMP_URL));
+        //mRTMPUrlEditText.setText(mSharedPref.getString(RTMP_URL, DEFAULT_RTMP_URL));
         mRTMPUrlEditText.addTextChangedListener(this);
         mSurfaceView =  (SrsCameraView) findViewById(R.id.glsurfaceview_camera);
         mPublisher = new SrsPublisher((SrsCameraView)mSurfaceView);
+
         mPublisher.setEncodeHandler(new SrsEncodeHandler(this));
         mPublisher.setRtmpHandler(new RtmpHandler(this));
         mPublisher.setRecordHandler(new SrsRecordHandler(this));
         mPublisher.setPreviewResolution(640, 360);
         mPublisher.setOutputResolution(360, 640);
         mPublisher.setVideoHDMode();
+        mPublisher.switchToSoftEncoder();
+
+
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             //ask for authorisation
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 50);
         } else {
-            mPublisher.startCamera();
+            String streamId = getIntent().getStringExtra("streamId");
+            //mPublisher.startCamera();
+            this.startPublish(streamId);
         }
 
 
@@ -192,6 +192,18 @@ public class PublisherActivity extends AppCompatActivity implements RtmpHandler.
     @Override
     public void onRecordIOException(IOException e) {
 
+    }
+
+    public void startPublish(String streamId) {
+        if (streamId != null) {
+            String url = String.format(BuildConfig.RTMP_HOST, streamId);
+            Log.d("startPublish", url);
+
+            mPublisher.startCamera();
+            mPublisher.startPublish(url);
+            mPublishing = true;
+            this.refreshControlState();
+        }
     }
 
     public void publish(View view) {
