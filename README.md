@@ -33,8 +33,14 @@ debug {
 
 ### Screenshots
 <div>
+
+<img width=256 src="https://dl2.pushbulletusercontent.com/o40GRh2wQ3mnDutyOWXX0glcEvdja02n/Screenshot_2017-10-15-14-32-32-527_fudreamer.com.livetalk.png" />
+
 <img width=256 src="https://i.imgur.com/CBk8gyW.png" />
+
+
 <img width=256 src="https://dl2.pushbulletusercontent.com/vaWsdwL2BAFqRIn8DrflPlMs1POndk7f/Screenshot_2017-10-15-14-24-37-071_fudreamer.com.livetalk.png" />
+
 <img width=256 src="https://i.imgur.com/vbOITL1.jpg" />
 </div>
 
