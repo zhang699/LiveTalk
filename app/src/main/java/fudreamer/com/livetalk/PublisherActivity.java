@@ -50,7 +50,7 @@ public class PublisherActivity extends AppCompatActivity implements RtmpHandler.
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.setTitle("Publisher");
+        this.setTitle(getIntent().getStringExtra("name"));
 
         mSharedPref = getSharedPreferences(getApplication().getPackageName(), MODE_PRIVATE);
         mPublishButton = (Button) findViewById(R.id.publish);

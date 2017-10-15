@@ -5,25 +5,38 @@
 
 - Import Module ```jjdxm_ijkplayer``` from Android Studio with [jjdxm_ijkplayer repo](https://github.com/jjdxmashl/jjdxm_ijkplayer) and name as ```jjdxm_ijkplayer```
 
+- Comment root.project.* in jjdxm_ijkplayer/build.gradle, use your app configuration instead.
+```
+  defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 23
+        /*minSdkVersion rootProject.ext.jjdxm_minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.jjdxm_versionCode
+        versionName rootProject.ext.jjdxm_versionName*/
+    }
+```
 - Import Module from [ossrs](https://github.com/begeekmyfriend/yasea) and name as ```ors.yasea```
+
+### How to use
+- Setting up your local RTMP and [LiveTalkServer]() location in [app/build.gradle](```https://github.com/zhang699/LiveTalk/blob/master/app/build.gradle```)
+```
+debug {
+            buildConfigField "String", "API_HOST", "\"http://10.0.3.2:10010\""
+            buildConfigField "String", "RTMP_HOST", "\"rtmp://10.0.3.2/live/%s\""
+            buildConfigField "String", "API_TOKEN", "\"Ss-^3EnbsM`Mbp(#ou2})&wXYn|Pu\""
+        }
+```
+- Create Room by clicking `+` floating button or clicking list item for join the room
+- Enjoy !!!
+
 
 ### Screenshots
 <div>
-<img width=256 src="https://dl2.pushbulletusercontent.com/WolTqTEF6nak2SmTrAI35xOcifZotdnm/Screenshot_2017-10-01-15-43-10-419_fudreamer.com.livetalk.png" />
-<img width=256 src="https://i.imgur.com/qUldsDx.jpg" />
+<img width=256 src="https://i.imgur.com/CBk8gyW.png" />
+<img width=256 src="https://dl2.pushbulletusercontent.com/vaWsdwL2BAFqRIn8DrflPlMs1POndk7f/Screenshot_2017-10-15-14-24-37-071_fudreamer.com.livetalk.png" />
+<img width=256 src="https://i.imgur.com/vbOITL1.jpg" />
 </div>
-
-### How to use
-
-- Choose your role (Publisher or Subscriber)
-
-- Input your RTMP Server's location (use [nginx-rtmp](https://github.com/zhang699/nginx-rtmp))
-
-```rtmp://localhost/live/stream // replace localhost to 10.0.3.2 if run Genymotion emulator```
-
-- Click ```Publish``` Button if you are publisher
-
-- Subscriber can See the RTMP stream content came from Publisher
 
 
 ### Use Opensources 
