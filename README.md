@@ -5,6 +5,13 @@
 * [nginx-rtmp](https://github.com/zhang699/nginx-rtmp)
 * [LiveTalkServer](https://github.com/zhang699/LiveTalkServer)
 
+### Overview
+
+<div>
+
+<img src="./LiveTalk_overview.svg" />
+</div>
+
 ### Installation
 
 * `git clone` the code
