@@ -1,3 +1,10 @@
+### Requirements
+
+* [jjdxm_ijkplayer](<(https://github.com/jjdxmashl/jjdxm_ijkplayer)>)
+* [ossrs](https://github.com/begeekmyfriend/yasea)
+* [nginx-rtmp](https://github.com/zhang699/nginx-rtmp)
+* [LiveTalkServer](https://github.com/zhang699/LiveTalkServer)
+
 ### Installation
 
 * `git clone` the code
